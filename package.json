@@ -1,0 +1,20 @@
+{
+  "name": "proymoviles-server",
+  "version": "0.0.0",
+  "description": "Api rest para el proyecto de moviles",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Proyecto",
+    "tercerParcial",
+    "Moviles",
+    "Uach"
+  ],
+  "author": "Ruben Arturo Gonzalez, Andree Amaro Gonzalez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
