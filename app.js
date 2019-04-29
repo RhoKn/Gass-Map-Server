@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 var app = express();
-
+const userRoutes = require('./routes/userRoutes');
 
 
 //rutas
@@ -25,5 +25,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', true);
   next();
 });
+
+app.use('/users',userRoutes);
 
 module.exports = app;
