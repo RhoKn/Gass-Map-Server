@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 var app = express();
 const userRoutes = require('./routes/userRoutes');
 const productTypesRoutes = require('./routes/productTypeRoutes');
+const productRoutes = require('./routes/productRoutes');
 
 
 app.use(bodyParser.urlencoded({extended:false}));
@@ -24,5 +25,6 @@ app.use((req, res, next) => {
 
 app.use('/users',userRoutes);
 app.use('/pTypes',productTypesRoutes);
+app.use('/products',productRoutes);
 
 module.exports = app;
