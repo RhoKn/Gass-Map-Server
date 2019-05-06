@@ -87,18 +87,17 @@ function viewUser (req, res) {
 }
 
 function loginUser (req, res) {
+    console.log(req.body);
     const userToLogin = req.body;
     User.findOne(
       {
-        $or:[
-              {nick_name : req.body.nick_name},
-              {email:req.body.email}
-        ]},(err,user)=>{
+              nick_name : req.body.nick_name
+        },(err,user)=>{
         if(err) return res.status(500).send({message: 'Hubo un error en la petición'});
         if(user){
             bcrypt.compare(req.body.password, user.password,(err, areEqual)=>{
                 if(err) return res.status(500).send({message: 'Hubo un error en la petición'});
-                if(!areEqual) return res.status(404).send({message: 'Hubo un error en la petición'});
+                if(!areEqual) return res.status(404).send({message: 'Los datos no coinciden'});
 
                 if(userToLogin.getToken){
                      return res.status(200).send({
