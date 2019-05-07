@@ -24,6 +24,8 @@ function listAll(req, res){
     print(Http.responseText);
   }
 
+  return res.status(200).send({message: "Todo bien"});
+
 }
 
 function print(data){
