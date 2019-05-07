@@ -29,6 +29,7 @@
     "mongoose": "^5.5.2",
     "mongoose-paginate-v2": "^1.0.24",
     "mongoose-pagination": "^1.0.0",
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.18.11",
+    "xmlhttprequest": "^1.8.0"
   }
 }

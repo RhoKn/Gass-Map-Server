@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 var app = express();
 const userRoutes = require('./routes/userRoutes');
 const favsRoutes = require('./routes/favoriteRoutes');
-
+const gasStationRoutes = require('./routes/gasStationRoutes');
 
 
 app.use(bodyParser.urlencoded({extended:false}));
@@ -25,6 +25,6 @@ app.use((req, res, next) => {
 
 app.use('/users',userRoutes);
 app.use('/favs',favsRoutes);
-
+app.use('/gasStations',gasStationRoutes);
 
 module.exports = app;
