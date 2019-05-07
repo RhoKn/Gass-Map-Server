@@ -5,6 +5,9 @@
 
 function cleanAddress(){
 
+    /*
+        Sample
+    */
     var result = [
         {
             "_id": "587fbd68edfe99480a072f14",
@@ -57,18 +60,34 @@ function cleanAddress(){
         }
     ]
 
-    var colonia = "";
-    var numero = "";
-    var calle = "";
-    var flag = false;
+    /*
+        Variables donde se guardaran las partes de la direccion
+        TODO: Cambiar esto para que se adecue con el modelo segun corresponda.
+    */
+    let colonia = "";
+    let numero = "";
+    let calle = "";
 
-    var numeroRegex = /\No.+[0-9]/g;
-    var coloniaRegex = /\Col.+[a-zA-Z0-9]/g;
-    var i = 0;
+    /*
+        Regex
+    */
+    let numeroRegex = /\No.+[0-9]/;
+    let coloniaRegex = /\Col.+/;
+    let calleRegex = /\No.+\s+\Col.+/;
 
+    /*
+        Iteramos por cada elemento en el arreglo result
+    */
     result.map(element => {
-        console.log("calle: " + numeroRegex.exec(element.calle));
-        console.log("colonia: " + coloniaRegex.exec(element.calle));
+        // Se reemplaza la parte del string original que coincida con No.xxx Colxxx por nada para obtener solo la calle.
+        calle = element.calle.replace(calleRegex, "");
+        console.log(calle);
+
+        //Regex.exec retorna un arreglo con la parte del string que hizo match con la regex
+        numero = numeroRegex.exec(element.calle)
+        console.log(numero[0])
+        colonia = coloniaRegex.exec(element.calle)
+        console.log(colonia[0]);
     });
 }
 
