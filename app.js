@@ -5,9 +5,7 @@ const bodyParser = require('body-parser');
 
 var app = express();
 const userRoutes = require('./routes/userRoutes');
-
-
-
+const favsRoutes = require('./routes/favoriteRoutes');
 
 
 
@@ -26,7 +24,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/users',userRoutes);
-
+app.use('/favs',favsRoutes);
 
 
 module.exports = app;
