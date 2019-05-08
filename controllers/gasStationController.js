@@ -2,7 +2,8 @@
 
 const GasStation = require('../models/gasStation');
 const moment = require('moment');
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const axios = require('axios');
+
 
 function listAll(req, res){
 
@@ -14,17 +15,42 @@ function listAll(req, res){
       }
   };
 
-  var data;
-  const Http = new XMLHttpRequest();
-  const url='https://api.datos.gob.mx/v2/precio.gasolina.publico';
-  Http.open("GET", url);
-  Http.send();
-  Http.onreadystatechange=(e)=>{
-    data = Http.responseText;
-    print(Http.responseText);
-  }
+  axios.get("https://api.datos.gob.mx/v2/precio.gasolina.publico")
+  .then( response => {
+    let json = response.data
 
-  return res.status(200).send({message: "Todo bien"});
+    json.results.forEach( data => {
+      let gas_station = new GasStation({
+        id          :    data._id,
+        direction   :    data.calle,
+        premium     :    data.premium,
+        regular     :    data.regular,
+        diesel      :    data.diesel
+      })
+
+      GasStation.find({ id: data._id }, (err, gs) => {
+        console.log(gs);
+        if (gs.length) {
+          GasStation.remove({ id: data._id }).then(() => {
+            print('Se borro la gasolinera')
+          }).catch( (e) => {
+            print(e)
+          });
+        }
+
+        gas_station.save()
+        .then( () => {
+          print('Se guardo gasolinera')
+        }).catch((e) => {
+          print(e)
+        })
+      })
+    })
+
+    return res.status(200).json(json);
+  }).catch(error => {
+    console.log(error);
+  });
 
 }
 
