@@ -5,28 +5,19 @@ const moment = require('moment');
 
 
 function listAll(req,res){
-    const options = {
-        page: req.params.page ? req.params.page : 1,
-        limit: req.params.limit ? req.params.limit : 200,
-        collation: {
-            locale: 'en'
-        }
-    };
-    Favorite.paginate({}, options, function(err, result) {
+
+    Favorite.find({
+        user: req.params.id
+    }).exec((err, foundedFavs) => {
         if(err) return res.status(500).send({message: 'Hubo un error en la petición'});
-        return res.status(200).send({
-            message     :   'Lista de favoritos',
-            favortes       :   result.docs,
-            total       :   result.totalDocs,
-            pages       :   result.totalPages,
-            hasNextPage :   result.hasNextPage,
-            nextPage    :   result.nextPage,
-            hasPrevPage :   result.hasPrevPage,
-            prevPage    :   result.prevPage
+        if(!foundedFavs && !foundedFavs.length>0) return res.status(302).send({message: 'No existen favoritos para el usuario'});
+        
+        return res.status(201).send({
+            message :   'Favoritos del usuario',
+            foundedFavs    :   foundedFavs
         });
     });
 }
-
 function createFavorite (req, res) {
     let favsParam = req.body;
     if(favsParam.user && favsParam.gasolinera){
