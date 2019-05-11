@@ -6,7 +6,9 @@ const Schema = mongoose.Schema;
 
 var gasStationSchema = new Schema({
     id          :    String,
-    direction   :    String,
+    street      :    String,
+    colony      :    String,
+    number      :    String,
     premium     :    Number,
     regular     :    Number,
     diesel      :    Number
