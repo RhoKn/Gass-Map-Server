@@ -7,7 +7,7 @@ var app = express();
 const userRoutes = require('./routes/userRoutes');
 const favsRoutes = require('./routes/favoriteRoutes');
 const gasStationRoutes = require('./routes/gasStationRoutes');
-
+const commentsRoutes = require('./routes/commentRoutes');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -26,5 +26,6 @@ app.use((req, res, next) => {
 app.use('/users',userRoutes);
 app.use('/favs',favsRoutes);
 app.use('/gasStations',gasStationRoutes);
+app.use('/comments',commentsRoutes);
 
 module.exports = app;

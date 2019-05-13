@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 var favoriteSchema = new Schema({
     user           :   {type: Schema.ObjectId, ref: 'User'},
-    gasolinera     :    String,
+    gasolinera     :    {type: Schema.ObjectId, ref: 'GasStation'},
     added_time     :    String
 });
 

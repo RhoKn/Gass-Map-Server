@@ -8,7 +8,7 @@ function listAll(req,res){
 
     Favorite.find({
         user: req.params.id
-    }).exec((err, foundedFavs) => {
+    }).populate('gasolinera').exec((err, foundedFavs) => {
         if(err) return res.status(500).send({message: 'Hubo un error en la petición'});
         if(!foundedFavs && !foundedFavs.length>0) return res.status(302).send({message: 'No existen favoritos para el usuario'});
         
@@ -20,6 +20,7 @@ function listAll(req,res){
 }
 function createFavorite (req, res) {
     let favsParam = req.body;
+    console.log(favsParam)
     if(favsParam.user && favsParam.gasolinera){
         let new_fav = new Favorite({
             user   :  favsParam.user,

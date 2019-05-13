@@ -11,7 +11,11 @@ var gasStationSchema = new Schema({
     number      :    String,
     premium     :    Number,
     regular     :    Number,
-    diesel      :    Number
+    diesel      :    Number,
+    longitude    :    String,
+    latitude   :    String,
+    postal_code :   Number,
+    razonsocial :   String
 });
 
 gasStationSchema.plugin(mongoosePaginate);
