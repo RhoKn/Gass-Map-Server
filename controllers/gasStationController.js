@@ -7,14 +7,6 @@ const axios = require('axios');
 
 function listAll(req, res) {
 
-  const options = {
-    page: req.params.page ? req.params.page : 1,
-    limit: req.params.limit ? req.params.limit : 200,
-    collation: {
-      locale: 'en'
-    }
-  };
-
   let numeroRegex = /\No\.+.+[0-9]+/;
   let coloniaRegex = /\Col+[^a-np-z]+.+/;
   let calleRegex = /\No\.+.+[0-9]+.+/;
@@ -24,13 +16,13 @@ function listAll(req, res) {
   let numero = "";
   let calle = "";
   let ciudad = "";
+  // let counter = 0;
 
-  axios.get("https://api.datos.gob.mx/v2/precio.gasolina.publico")
+  axios.get("https://api.datos.gob.mx/v2/precio.gasolina.publico?pageSize=100000")
     .then(response => {
       let json = response.data
 
       json.results.forEach(data => {
-
         //console.log("data: " + data.calle);
 
         calle = data.calle.replace(calleRegex, "");
@@ -74,12 +66,10 @@ function listAll(req, res) {
           razonsocial: data.razonsocial
         })
 
-        console.log(gas_station);
-
         GasStation.find({ id: data._id }, (err, gs) => {
           //console.log(gs);
           if (gs.length) {
-            GasStation.remove({ id: data._id }).then(() => {
+            GasStation.deleteOne({ id: data._id }).then(() => {
               //print('Se borro la gasolinera')
             }).catch((e) => {
               print(e)
@@ -88,14 +78,15 @@ function listAll(req, res) {
 
           gas_station.save()
             .then(() => {
-              //print('Se guardo gasolinera')
+              // counter += 1;
+              // print('Se guardo gasolinera #= ' + counter + '; ID=' + data._id)
             }).catch((e) => {
               print(e)
             })
         })
       })
 
-      return res.status(200).json(json);
+      return res.status(200).send('Cargando gasolineras a Base de Datos... Ver logs para ver progreso...');
     }).catch(error => {
       console.log(error);
     });
@@ -109,7 +100,7 @@ function print(data) {
 function listBdGas(req, res) {
   const options = {
     page: req.params.page ? req.params.page : 1,
-    limit: req.params.limit ? req.params.limit : 200,
+    limit: req.params.limit ? req.params.limit : 50,
     collation: {
       locale: 'en'
     }

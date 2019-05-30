@@ -14,7 +14,7 @@ var gasStationSchema = new Schema({
     diesel      :    Number,
     longitude    :    String,
     latitude   :    String,
-    postal_code :   Number,
+    postal_code :   String,
     razonsocial :   String
 });
 
